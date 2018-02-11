@@ -1,0 +1,29 @@
+.menu {
+  justify-content: space-around;
+}
+.menu a {
+  color: #4c7299;
+  text-decoration: none;
+  padding: 1%;
+  display: flex;
+  width: 20%;
+  padding-right: 6%;
+  padding-left: 6%;
+}
+.menu a .fa {
+  color: #4c7299;
+  min-width: 1em;
+  min-width: 38%;
+}
+.menu a:hover {
+  background-color: #bbb;
+  color: #2a3f55;
+}
+.menu a:hover .fa {
+  color: #2a3f55;
+}
+@media all and (min-width: 500px) {
+  .menu {
+    flex-direction: row;
+  }
+}

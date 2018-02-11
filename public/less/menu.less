@@ -1,0 +1,47 @@
+
+
+
+@couleur_lien : #4c7299;
+
+
+.menu {
+  justify-content: space-around;
+
+
+	a {
+		color : @couleur_lien ;
+		text-decoration :  none;
+		padding : 1%;
+		display : flex;
+		width : 20%; 
+    	padding-right: 6%;
+    	padding-left: 6%;
+
+		.fa {
+
+			color :  @couleur_lien;
+			min-width : 1em;
+			min-width: 38%;
+
+		}
+
+	}
+
+	a:hover {
+
+		background-color: #bbb;
+		color : darken(@couleur_lien, 20%) ;
+
+		.fa {
+
+		color : darken(@couleur_lien, 20%) ;
+		}
+	}
+} // fin .menu
+
+
+@media all and (min-width:500px){
+    .menu{
+        flex-direction :  row;
+    }
+}

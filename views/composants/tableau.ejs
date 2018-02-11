@@ -1,0 +1,22 @@
+<table class="tableau">
+    <%  
+    let noLigne =0
+    for (elm of adresses) {
+     if (noLigne == 0) {
+       noLigne++ 
+    %>
+        <tr>
+            <% for (p in elm) {%>
+            <th><%= p %></th>
+            <% } %>
+        </tr>
+        <% } %>
+
+    <tr>
+        <% for (p in elm) {%>
+        <td><%= elm[p] %></td>
+        <% } %>
+    </tr>
+    <% } %>
+</table>
+

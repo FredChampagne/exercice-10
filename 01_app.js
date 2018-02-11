@@ -21,16 +21,38 @@ MongoClient.connect('mongodb://127.0.0.1:27017', (err, database) => {
 })
 
 
+/*
+Les routes
+*/
 
+////////////////////////////////////////// Route /
 app.set('view engine', 'ejs'); // générateur de template
 
 app.get('/', function (req, res) {
+      
+ res.render('accueil.ejs')  
+ 
+  });
+
+//////////////////////////////////////////
+app.get('/adresse', function (req, res) {
    var cursor = db.collection('adresse')
                 .find().toArray(function(err, resultat){
  if (err) return console.log(err)        
- res.render('gabarit_3.ejs', {adresses: resultat})  
+ res.render('adresse.ejs', {adresses: resultat})  
  
   });
+})
+
+
+////////////////////////////////////////// Route /ajouter
+app.post('/ajouter', (req, res) => {
+ db.collection('adresse').save(req.body, (err, result) => {
+ if (err) return console.log(err)
+ console.log(req.body)	
+ console.log('sauvegarder dans la BD')
+ res.redirect('/adresse')
+ })
 })
 
 

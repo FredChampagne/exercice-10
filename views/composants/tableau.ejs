@@ -6,13 +6,30 @@
         <th>Téléphone</th>  
     </tr>
     <%  for (elm of adresses) {%>
-    <tr>
+    <tr id='<%= elm._id %>'>
         <td><%= elm._id %></td>
-        <td><%= elm.nom %></td>
-        <td><%= elm.prenom %></td>
-        <td><%= elm.telephone %></td>                
+        <td contenteditable='true'><%= elm.nom %></td>
+        <td contenteditable='true'><%= elm.prenom %></td>
+        <td contenteditable='true'><%= elm.telephone %></td>                
         <td><a href="/detruire/<%= elm._id %>">Détruire</a></td>
+        <td><a class='modifier' href="#">Modifier</a></td>
     </tr>
     <% } %>
 </table>
+
+<script type="text/javascript">
+    let elmModifier = document.querySelectorAll('.modifier')
+    console.log(elmModifier.length)
+    for (elm of elmModifier)
+        {
+            elm.addEventListener('click', function(){
+            console.log(this.parentElement.parentElement.id)
+            let elmTr = this.parentElement.parentElement 
+            console.log(elmTr.querySelector('td:nth-child(2)').innerHTML)
+            })
+        }
+
+
+
+</script>
 

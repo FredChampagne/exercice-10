@@ -1,21 +1,17 @@
 <table class="tableau">
-    <%  
-    let noLigne =0
-    for (elm of adresses) {
-     if (noLigne == 0) {
-       noLigne++ 
-    %>
-        <tr>
-            <% for (p in elm) {%>
-            <th><%= p %></th>
-            <% } %>
-        </tr>
-        <% } %>
-
     <tr>
-        <% for (p in elm) {%>
-        <td><%= elm[p] %></td>
-        <% } %>
+        <th>_id</th>
+        <th>Nom</th>
+        <th>Prenom</th>        
+        <th>Téléphone</th>  
+    </tr>
+    <%  for (elm of adresses) {%>
+    <tr>
+        <td><%= elm._id %></td>
+        <td><%= elm.nom %></td>
+        <td><%= elm.prenom %></td>
+        <td><%= elm.telephone %></td>                
+        <td><a href="/detruire/<%= elm._id %>">Détruire</a></td>
     </tr>
     <% } %>
 </table>

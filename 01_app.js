@@ -35,7 +35,7 @@ app.get('/', function (req, res) {
  
   });
 
-//////////////////////////////////////////
+//////////////////////////////////////////  Route Adresse
 app.get('/adresse', function (req, res) {
    var cursor = db.collection('adresse')
                 .find().toArray(function(err, resultat){
@@ -62,7 +62,6 @@ console.log('util = ' + util.inspect(req.body));
 req.body._id = 	ObjectID(req.body._id)
  db.collection('adresse').save(req.body, (err, result) => {
 	 if (err) return console.log(err)
-	 console.log(req.body)	
 	 console.log('sauvegarder dans la BD')
 	 res.redirect('/adresse')
 	 })
@@ -82,3 +81,17 @@ if (err) return console.log(err)
  res.redirect('/adresse')  // redirige vers la route qui affiche la collection
  })
 })
+
+
+///////////////////////////////////////////////////////////   Route /trier
+app.get('/trier/:cle/:ordre', (req, res) => {
+
+ let cle = req.params.cle
+ let ordre = (req.params.ordre == 'asc' ? 1 : -1)
+ let cursor = db.collection('adresse').find().sort(cle,ordre).toArray(function(err, resultat){
+
+  ordre = (req.params.ordre == 'asc' ? 'desc' : 'asc')  
+ res.render('adresse.ejs', {adresses: resultat, cle, ordre })	
+})
+
+}) 

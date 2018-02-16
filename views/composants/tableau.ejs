@@ -6,7 +6,7 @@
         <th>Téléphone</th>  
     </tr>
     <%  for (elm of adresses) {%>
-    <tr id='<%= elm._id %>'>
+    <tr>
         <td><%= elm._id %></td>
         <td contenteditable='true'><%= elm.nom %></td>
         <td contenteditable='true'><%= elm.prenom %></td>
@@ -17,6 +17,14 @@
     <% } %>
 </table>
 
+<form name="frmUpdate" id="frmUpdate" action="/modifier" method="post">
+    <input  type="text" placeholder="_id" name="_id" id='_id'>
+    <input  type="text" placeholder="nom" name="nom" id='nom'>
+    <input  type="text" placeholder="prenom" name="prenom" id='prenom'>
+    <input  type="text" placeholder="telephone" name="telephone" id='telephone'>
+    <button type="submit">Ajouter</button>
+</form>
+
 <script type="text/javascript">
     let elmModifier = document.querySelectorAll('.modifier')
     console.log(elmModifier.length)
@@ -25,7 +33,18 @@
             elm.addEventListener('click', function(){
             console.log(this.parentElement.parentElement.id)
             let elmTr = this.parentElement.parentElement 
-            console.log(elmTr.querySelector('td:nth-child(2)').innerHTML)
+            let _id = elmTr.querySelector('td:nth-child(1)').innerHTML
+            let nom = elmTr.querySelector('td:nth-child(2)').innerHTML
+            let prenom = elmTr.querySelector('td:nth-child(3)').innerHTML
+            let telephone = elmTr.querySelector('td:nth-child(4)').innerHTML
+
+            elmForm = document.getElementById('frmUpdate')
+
+            elmForm.nom.value = nom
+            elmForm.prenom.value = prenom
+            elmForm.telephone.value = telephone
+            elmForm._id.value =  _id
+            elmForm.submit()
             })
         }
 

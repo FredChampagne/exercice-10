@@ -46,6 +46,7 @@ app.get('/adresse', function (req, res) {
 
 ////////////////////////////////////////// Route /ajouter
 app.post('/ajouter', (req, res) => {
+console.log('route /ajouter')	
  db.collection('adresse').save(req.body, (err, result) => {
  if (err) return console.log(err)
  console.log(req.body)	
@@ -56,8 +57,9 @@ app.post('/ajouter', (req, res) => {
 
 ////////////////////////////////////////  Route /modifier
 app.post('/modifier', (req, res) => {
-
-console.log('util = ' + util.inspect(req.body));	
+console.log('route /modifier')
+console.log('util = ' + util.inspect(req.body));
+req.body._id = 	ObjectID(req.body._id)
  db.collection('adresse').save(req.body, (err, result) => {
 	 if (err) return console.log(err)
 	 console.log(req.body)	
@@ -69,7 +71,7 @@ console.log('util = ' + util.inspect(req.body));
 
 ////////////////////////////////////////  Route /detruire
 app.get('/detruire/:id', (req, res) => {
-
+ console.log('route /detruire')
  console.log('util = ' + util.inspect(req.params));	
  var id = req.params.id
  console.log(id)

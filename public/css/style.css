@@ -55,7 +55,7 @@ body {
   font-style: italic;
   align-self: flex-start;
 }
-@media all and (min-width: 800px) {
+@media all and (min-width: 960px) {
   .global {
     padding: 20px 0 20px 0;
   }
@@ -63,7 +63,7 @@ body {
   .menu,
   .principal,
   .pied-page {
-    width: 800px;
+    width: 960px;
   }
   .entete,
   .principal {

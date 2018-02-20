@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs')
 const util = require("util");
 const app = express();
+const peupler = require('./mes_modules/peupler')
 const bodyParser= require('body-parser')
 const MongoClient = require('mongodb').MongoClient // le pilote MongoDB
 const ObjectID = require('mongodb').ObjectID;
@@ -95,3 +96,15 @@ app.get('/trier/:cle/:ordre', (req, res) => {
 })
 
 }) 
+/////////////////////////////////////////////////////////  Route /peupler
+app.get('/peupler', (req, res) => {
+	let tabMembre = peupler()
+	for (elm of tabMembre)
+	{
+	let cursor = db.collection('adresse').save(elm, (err, res)=>{
+		if(err) console.error(err)
+			console.log('ok')
+
+		})
+	}
+})

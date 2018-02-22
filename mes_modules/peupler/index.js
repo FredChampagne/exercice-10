@@ -1,10 +1,15 @@
+"use strict";
+
 // Le fichier index.js utilise le module tableaux.js
 
+
+
 const tableau = require('./tableaux')
+const util = require('util')
 
-let longTabNom = tableau.tabNom.length
-let longTabPrenom = tableau.tabPrenom.length
-
+const longTabNom = tableau.nom.length
+const longTabPrenom = tableau.prenom.length
+const longTabDomaine = tableau.domaine.length
 const genere_telephone = ()=> {
   let sTel = ''
   for (let k=0 ; k<10 ; k++)
@@ -19,6 +24,13 @@ const genere_telephone = ()=> {
     }
   return sTel
   }
+/////////////////////////////////////////////////////////
+/*
+const genere_courriel = () => {
+  let gauche = 
+}
+
+*/
 
 
 
@@ -26,18 +38,23 @@ const genere_telephone = ()=> {
 const peupler_json = ()=> {
 
    let tabMembre = []
-   let nom
+   let nom 
    let prenom
+   let domaine
    for (let k=0 ; k<20 ; k++)
    {
+     nom = tableau.nom[Math.floor(Math.random()*longTabNom)]
+     prenom = tableau.prenom[Math.floor(Math.random()*longTabPrenom)]
+     domaine =  tableau.domaine[Math.floor(Math.random()*longTabDomaine)]
      tabMembre[k] =
      {
-       nom :  tableau.tabNom[Math.floor(Math.random()*longTabNom)],
-       prenom :  tableau.tabPrenom[Math.floor(Math.random()*longTabPrenom)],
-       telephone : genere_telephone()
+       nom :  nom,
+       prenom :  prenom,
+       telephone : genere_telephone(),
+       courriel :  prenom.charAt(0).toLowerCase() + nom.toLowerCase() + '@' + domaine
      }
    }
-
+console.log(util.inspect(tabMembre))
   return tabMembre
 }
 

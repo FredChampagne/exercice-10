@@ -107,4 +107,16 @@ app.get('/peupler', (req, res) => {
 
 		})
 	}
+	res.redirect('/adresse')
+})
+
+/////////////////////////////////////////////////////////  Route /peupler
+app.get('/vider', (req, res) => {
+
+	let cursor = db.collection('adresse').drop((err, res)=>{
+		if(err) console.error(err)
+			console.log('ok')
+			
+		})
+	res.redirect('/adresse')
 })

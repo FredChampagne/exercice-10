@@ -3,8 +3,8 @@
  */
 
 'use strict';
-
-let tabNom = [ 
+const Tableau = {
+      nom : [ 
                'Martin',
                'Marchand',
                'Trudeau',
@@ -39,9 +39,9 @@ let tabNom = [
                'Talon',
                'Bellemarre',
                'Mercier'
-               ]
+               ],
 
-let tabCourriel = [
+ domaine : [
                   'hotmail.com',
                   'vedeotron.com',
                   'gmail.com',
@@ -52,9 +52,9 @@ let tabCourriel = [
                   'bell.ca',
                   'umontreal.ca',
                   'skillscanada.ca',
-                  'inforoutefpt.com']
+                  'inforoutefpt.com'],
 
-let ville = [
+ ville : [
             'Montréal',
             'Québec',
             'Saskatshewan',
@@ -66,9 +66,9 @@ let ville = [
             'Gaspé',
             'Hudson',
             'New York'
-            ]
+            ],
 
-let tabPrenom = [
+   prenom : [
                   'Luc',
                   'Éric',
                   'François',
@@ -109,5 +109,8 @@ let tabPrenom = [
                   'Charlotte'
                     ]
 
-module.exports.tabNom = tabNom;
-module.exports.tabPrenom = tabPrenom;
+            }        
+
+module.exports = Tableau
+
+

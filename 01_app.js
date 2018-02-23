@@ -44,7 +44,15 @@ app.get('/adresse', function (req, res) {
  res.render('adresse.ejs', {adresses: resultat})   
   });
 })
-
+//////////////////////////////////////////  Route Rechercher
+app.post('/rechercher',  (req, res) => {
+   let recherche = req.body.recherche
+   let cursor = db.collection('adresse')
+                .find({nom:recherche}).toArray(function(err, resultat){
+ if (err) return console.log(err)        
+ res.render('adresse.ejs', {adresses: resultat})   
+  });
+})
 ////////////////////////////////////////// Route /ajouter
 app.post('/ajouter', (req, res) => {
 console.log('route /ajouter')	
@@ -98,7 +106,8 @@ app.get('/trier/:cle/:ordre', (req, res) => {
 }) 
 /////////////////////////////////////////////////////////  Route /peupler
 app.get('/peupler', (req, res) => {
-	let tabMembre = peupler()
+	let collectionMembre = peupler()
+	/*
 	for (elm of tabMembre)
 	{
 	let cursor = db.collection('adresse').save(elm, (err, res)=>{
@@ -107,7 +116,14 @@ app.get('/peupler', (req, res) => {
 
 		})
 	}
-	res.redirect('/adresse')
+	*/
+
+	let cursor = db.collection('adresse').insertMany(collectionMembre, (err, resultat)=>{
+		if(err) console.error(err)
+			// console.log('ok')
+			// console.log(util.inspect(resultat))
+			res.redirect('/adresse')
+		})
 })
 
 /////////////////////////////////////////////////////////  Route /peupler
@@ -120,3 +136,5 @@ app.get('/vider', (req, res) => {
 		})
 	res.redirect('/adresse')
 })
+
+

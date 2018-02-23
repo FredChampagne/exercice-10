@@ -16,6 +16,18 @@
   text-decoration: none;
   background-color: #bfb;
   padding: 3px;
+  border-radius: 19%;
+  font-size: 1.5em;
+}
+.tableau td a.detruire,
+.tableau th a.detruire {
+  background-color: #fce9e2;
+  color: #f00;
+}
+.tableau td a.modifier,
+.tableau th a.modifier {
+  background-color: #defff2;
+  color: #11b911;
 }
 .tableau td a:hover,
 .tableau th a:hover {
@@ -26,7 +38,9 @@
   background-color: #ddd;
 }
 .tableau td:nth-child(1),
-.tableau th:nth-child(1) {
+.tableau th:nth-child(1),
+.tableau td:nth-child(5),
+.tableau th:nth-child(5) {
   display: none;
 }
 @media all and (min-width: 710px) {
@@ -37,7 +51,9 @@
     font-size: .8em;
   }
   .tableau td:nth-child(1),
-  .tableau th:nth-child(1) {
+  .tableau th:nth-child(1),
+  .tableau td:nth-child(5),
+  .tableau th:nth-child(5) {
     display: table-cell;
   }
 }

@@ -49,7 +49,7 @@ const peupler_json = ()=> {
        "courriel" :  prenom.charAt(0).toLowerCase() + nom.toLowerCase() + '@' + domaine
      }
    }
-console.log(util.inspect(tabMembre))
+// console.log(util.inspect(tabMembre))
   return tabMembre
 }
 

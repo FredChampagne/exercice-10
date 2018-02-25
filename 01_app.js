@@ -46,11 +46,23 @@ app.get('/adresse', function (req, res) {
 })
 //////////////////////////////////////////  Route Rechercher
 app.post('/rechercher',  (req, res) => {
-   let recherche = req.body.recherche
+   let recherche = req.body.recherche.toLowerCase()
+   let regRecherche = new RegExp(recherche, 'i')
+   var match = regRecherche.exec(recherche);
+	console.log("match[0] = " + match[0]); 
+	console.log("match[1] = " + match[1]); 
+
+   console.log(recherche)
    let cursor = db.collection('adresse')
-                .find({nom:recherche}).toArray(function(err, resultat){
+                .find({$or: [ 
+                				{nom: {$regex :regRecherche, $options: "$i"}},
+                			  	{prenom: {$regex :regRecherche, $options: "$i"}},
+                			 	{telephone: {$regex :regRecherche, $options: "$i"}},
+                				{courriel: {$regex :regRecherche, $options: "$i"}}
+                			]
+                		}).toArray(function(err, resultat){
  if (err) return console.log(err)        
- res.render('adresse.ejs', {adresses: resultat})   
+ res.render('adresse.ejs', {adresses: resultat, recherche:recherche})   
   });
 })
 ////////////////////////////////////////// Route /ajouter
@@ -58,7 +70,7 @@ app.post('/ajouter', (req, res) => {
 console.log('route /ajouter')	
  db.collection('adresse').save(req.body, (err, result) => {
  if (err) return console.log(err)
- console.log(req.body)	
+ // console.log(req.body)	
  console.log('sauvegarder dans la BD')
  res.redirect('/adresse')
  })
@@ -67,7 +79,7 @@ console.log('route /ajouter')
 ////////////////////////////////////////  Route /modifier
 app.post('/modifier', (req, res) => {
 console.log('route /modifier')
-console.log('util = ' + util.inspect(req.body));
+// console.log('util = ' + util.inspect(req.body));
 req.body._id = 	ObjectID(req.body._id)
  db.collection('adresse').save(req.body, (err, result) => {
 	 if (err) return console.log(err)
@@ -80,7 +92,7 @@ req.body._id = 	ObjectID(req.body._id)
 ////////////////////////////////////////  Route /detruire
 app.get('/detruire/:id', (req, res) => {
  console.log('route /detruire')
- console.log('util = ' + util.inspect(req.params));	
+ // console.log('util = ' + util.inspect(req.params));	
  var id = req.params.id
  console.log(id)
  db.collection('adresse')

@@ -12,10 +12,8 @@
             objOrdre[cle] = ordre
         }
 %>
-<form class='recherche' action='rechercher' method="post" name="recherche" id="recherche">
-    <input type="text" name="recherche">
-    <input type='submit' value="Rechercher">
-</form>
+
+
 <table class="tableau">
     <tr>
         <th><a href="/trier/_id/<%= objOrdre._id %>">_id<i class="fas fa-<%= (objOrdre._id=='asc'?'sort-up': 'sort-down') %>"></i></a></th>

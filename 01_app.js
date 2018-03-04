@@ -56,7 +56,7 @@ app.post('/rechercher',  (req, res) => {
    let cursor = db.collection('adresse')
                 .find({$or: [ 
                 				{nom: {$regex :regRecherche, $options: "$i"}},
-                			  	{prenom: {$regex :regRecherche, $options: "$i"}},
+                			  {prenom: {$regex :regRecherche, $options: "$i"}},
                 			 	{telephone: {$regex :regRecherche, $options: "$i"}},
                 				{courriel: {$regex :regRecherche, $options: "$i"}}
                 			]

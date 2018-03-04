@@ -1,5 +1,5 @@
 node_modules/
-css/*.css
-!css/normalize.css
+public/css/*.css
+!public/css/normalize.css
 
 

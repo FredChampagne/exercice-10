@@ -7,6 +7,10 @@ const bodyParser= require('body-parser')
 const MongoClient = require('mongodb').MongoClient // le pilote MongoDB
 const ObjectID = require('mongodb').ObjectID;
 app.use(bodyParser.urlencoded({extended: true}))
+
+// Permet d'ajouter la librairie socket.io
+const server = require('http').createServer(app);
+const io = require('./mes_modules/chat_socket').listen(server);
 /* on associe le moteur de vue au module «ejs» */
 app.use(express.static('public'));
 
@@ -35,6 +39,11 @@ app.get('/', function (req, res) {
  res.render('accueil.ejs')  
  
   });
+
+///////////////////////////////////////// Route Chat
+app.get('/chat', function (req, res) {
+	res.render('socket_vue.ejs')  
+});
 
 //////////////////////////////////////////  Route Adresse
 app.get('/adresse', function (req, res) {

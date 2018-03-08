@@ -1,5 +1,6 @@
 <h2>Clavardage</h2>
 <section id="enregistrement">
+    <p>Veuillez vous enregistrer pour utiliser le chat</p>
     <input type="text">
     <button onclick="enregistrement()">Enregistrement</button>
 </section>
@@ -54,10 +55,10 @@ function transmettre(){
 
 /* ---------------------------------------------------------- */
 function enregistrement(){
-    var elmUser = document.querySelector('#enregistrement input')
-    console.log(elmUser.value)
+    var elmUser = document.querySelector('#enregistrement input');
+    console.log(elmUser.value);
     /* l'événement « setUser » est transmit avec un objet */
-    socket.emit('setUser', {user : elmUser.value})
+    socket.emit('setUser', {user : elmUser.value});
  }
 
  function afficher_table_users(data) {

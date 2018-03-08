@@ -4,16 +4,12 @@
     <button onclick="enregistrement()">Enregistrement</button>
 </section>
 
-<section class="chat" style="display:none">
-    <table id="list_user">
-
-    </table>
-    <table id="message">
-        <th>Utilisateur</th>
-    </table>
+<section id="chat" style="display:none">
+    <table id="list_user"></table>
+    <table id="message"></table>
     <section id="message_a_transmettre">
         <input type="text" name="txtMessage">
-        <button>Transmettre</button>
+        <button onclick="transmettre()">Transmettre</button>
     </section>
 </section>
 <script type="text/javascript">
@@ -23,23 +19,59 @@ Pour établir une communication socket il faut un premier appel de
  Cette fonction est incluse dans la librairie socket.io. 
  Cette fonction déclenche un événement connect vers le serveur
  */
- window.onload = ()=>{
- socket = io();
- console.log(socket.id);
- socket.on('connect', function(){
- console.log('Le socket id = ' + socket.id); 
- /* l'événement ackUser a été transmis par le serveur */ 
- socket.on('ackUser', function(data){
- console.log('data en provenance du serveur = ' + data.user)
- })
- });
+let socket;
+window.onload = ()=>{
+    socket = io();
+    console.log(socket.id);
+
+    socket.on('connect', function(){
+        console.log('Le socket id = ' + socket.id); 
+        /* l'événement ackUser a été transmis par le serveur */ 
+    });
+    socket.on('disconnect', function(){
+        console.log('Utilisateur disconnecté');
+    });
+    socket.on('valide_user', function(data){
+        console.log('data en provenance du serveur = ' + data.user)
+        let elmEnregistrement = document.getElementById('enregistrement');
+        elmEnregistrement.style.display = 'none';
+        let elmChat = document.getElementById('chat');
+        elmChat.style.display = 'flex';
+    })
+    socket.on('diffuser_list_user', function(data){
+        afficher_table_users(data);
+    });
+    socket.on('diffuser_message', function(msg){
+        let unMessage = msg;
+        let leChat = document.getElementById('message');
+        leChat.innerHTML +=msg;
+
+    })
  }
+
+function transmettre(){
+    console.log("J'envoie un message");
+    let msg = document.getElementsByName('txtMessage')[0].value;
+    socket.emit('setMessage', {message: msg});
+}
+
 /* ---------------------------------------------------------- */
- function enregistrement(){
- var elmUser = document.querySelector('#enregistrement input')
- console.log(elmUser.value)
- /* l'événement « setUser » est transmit avec un objet 
- */
- socket.emit('setUser', {user : elmUser.value})
+function enregistrement(){
+    var elmUser = document.querySelector('#enregistrement input')
+    console.log(elmUser.value)
+    /* l'événement « setUser » est transmit avec un objet */
+    socket.emit('setUser', {user : elmUser.value})
+ }
+
+ function afficher_table_users(data) {
+    let sChaine = '';
+    for(id in data) {
+        sChaine += '­<tr>'
+            + '<td>' + id + '</td>'
+            + '<td>' + data[id] + '</td>'
+            + '</tr>'
+    }
+    let elmListUser = document.getElementById('list_user');
+    elmListUser.innerHTML = sChaine;
  }
 </script>

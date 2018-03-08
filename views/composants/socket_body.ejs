@@ -15,6 +15,7 @@
         <input type="text" name="txtMessage">
         <button onclick="transmettre()">Transmettre</button>
     </section>
+    <section id="log"></section>
 </section>
 <script type="text/javascript">
  /* 
@@ -48,26 +49,29 @@ window.onload = ()=>{
     socket.on('valide_message', function(data){
         afficher_mon_message(data.user, data.message, 'rgb(167, 211, 255)');
     });
+    socket.on('deconnexion', function(data){
+       deconnexion(data);
+    });
  }
- 
-/**
- * Transmet le message entré dans le champs de texte approprié
-*/
-function transmettre(){
-    console.log("J'envoie un message");
-    let msg = document.getElementsByName('txtMessage')[0].value;
-    socket.emit('setMessage', {message: msg});
-}
 
 /**
  * Enregistre l'utilisateur entré dans le champs de texte approprié
 */
 function enregistrement(){
     var elmUser = document.querySelector('#enregistrement input');
-    console.log(elmUser.value);
-    /* l'événement « setUser » est transmit avec un objet */
+    // l'événement « setUser » est transmit avec un objet contenant le nom de l'utilisateur
     socket.emit('setUser', {user : elmUser.value});
  }
+
+/**
+ * Transmet le message entré dans le champs de texte approprié
+*/
+function transmettre(){
+    //console.log("J'envoie un message");
+    let msg = document.getElementsByName('txtMessage')[0].value;
+     // l'événement « setMessage » est transmit avec un objet contenant le message
+    socket.emit('setMessage', {message: msg});
+}
 
 /**
  * Affiche les utilisateurs dans le tableau list_user
@@ -94,13 +98,24 @@ function enregistrement(){
 */
  function afficher_mon_message(user, msg, couleur){
     let sChaine = '';
-    let elmChat = document.getElementById('message');
+    let elmMessages = document.getElementById('message');
     let objRow = document.createElement('tr');
     objRow.style.backgroundColor = couleur;
     sChaine += '<td>' + user + '</td>'
         + '<td>' + msg + '</td>'
-    elmChat.appendChild(objRow);
+    elmMessages.appendChild(objRow);
     objRow.innerHTML += sChaine;
  }
+
+ /**
+ * Gère la déconnexion
+ * @param {user} L'utilisateur qui s'est déconnecté
+*/
+function deconnexion(user){
+    let elmLog = document.getElementById('log');
+    let msgDeconnexion = document.createElement('p');
+    msgDeconnexion.innerHTML = "L'utilisateur " + user + " s'est déconnecté.";
+    elmLog.appendChild(msgDeconnexion);
+}
 
 </script>

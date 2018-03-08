@@ -26,6 +26,7 @@ module.exports.listen = function (server) {
       socket.emit('valide_message', infoMessage);
     })
     socket.on('disconnect', function () {
+      socket.broadcast.emit('deconnexion', objUtilisateur[socket.id]);
       delete objUtilisateur[socket.id];
       io.sockets.emit('diffuser_list_user', objUtilisateur);
     });

@@ -7,7 +7,10 @@
 
 <section id="chat" style="display:none">
     <table id="list_user"></table>
-    <table id="message"></table>
+    <table id="message">
+        <th>Utilisateur</th>
+        <th>Message</th>
+    </table>
     <section id="message_a_transmettre">
         <input type="text" name="txtMessage">
         <button onclick="transmettre()">Transmettre</button>
@@ -39,21 +42,26 @@ window.onload = ()=>{
     socket.on('diffuser_list_user', function(data){
         afficher_table_users(data);
     });
-    socket.on('diffuser_message', function(msg){
-        afficher_mon_message(msg, '#0F1');
+    socket.on('diffuser_message', function(data){
+        afficher_mon_message(data.user, data.message, 'rgb(236, 236, 236)');
     });
-    socket.on('valide_message', function(msg){
-        afficher_mon_message(msg, '#234');
+    socket.on('valide_message', function(data){
+        afficher_mon_message(data.user, data.message, 'rgb(167, 211, 255)');
     });
  }
-
+ 
+/**
+ * Transmet le message entré dans le champs de texte approprié
+*/
 function transmettre(){
     console.log("J'envoie un message");
     let msg = document.getElementsByName('txtMessage')[0].value;
     socket.emit('setMessage', {message: msg});
 }
 
-/* ---------------------------------------------------------- */
+/**
+ * Enregistre l'utilisateur entré dans le champs de texte approprié
+*/
 function enregistrement(){
     var elmUser = document.querySelector('#enregistrement input');
     console.log(elmUser.value);
@@ -61,8 +69,13 @@ function enregistrement(){
     socket.emit('setUser', {user : elmUser.value});
  }
 
+/**
+ * Affiche les utilisateurs dans le tableau list_user
+ * @param {obj} data - Les utilisateurs du chat
+*/
  function afficher_table_users(data) {
     let sChaine = '';
+    // Pour chaque utilisateur (id), on l'affiche dans une rangée
     for(id in data) {
         sChaine += '­<tr>'
             + '<td>' + id + '</td>'
@@ -73,9 +86,21 @@ function enregistrement(){
     elmListUser.innerHTML = sChaine;
  }
 
- function afficher_mon_message(msg, couleur){
-    let unMessage = msg;
-    let leChat = document.getElementById('message');
-    leChat.innerHTML +=msg;
+/**
+ * Affiche le message envoyé dans le tableau chat
+ * @param {string} user - Nom de l'utilisateur qui envoie le message
+ * @param {string} msg - Message envoyé
+ * @param {string} couleur - Couleur selon le destinateur
+*/
+ function afficher_mon_message(user, msg, couleur){
+    let sChaine = '';
+    let elmChat = document.getElementById('message');
+    let objRow = document.createElement('tr');
+    objRow.style.backgroundColor = couleur;
+    sChaine += '<td>' + user + '</td>'
+        + '<td>' + msg + '</td>'
+    elmChat.appendChild(objRow);
+    objRow.innerHTML += sChaine;
  }
+
 </script>

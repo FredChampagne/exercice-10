@@ -17,9 +17,13 @@ module.exports.listen = function (server) {
     });
     // Traitement des messages
     socket.on('setMessage', function (data) {
-      console.log(util.inspect(objUtilisateur[socket.id]));
-      socket.broadcast.emit('diffuser_message', data.message);
-      socket.emit('valide_message', data.message);
+      let infoMessage = {
+        user: objUtilisateur[socket.id], 
+        message : data.message
+      };
+      //console.log(util.inspect(infoMessage));
+      socket.broadcast.emit('diffuser_message', infoMessage);
+      socket.emit('valide_message', infoMessage);
     })
     socket.on('disconnect', function () {
       delete objUtilisateur[socket.id];

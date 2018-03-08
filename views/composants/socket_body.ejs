@@ -42,11 +42,11 @@ window.onload = ()=>{
         afficher_table_users(data);
     });
     socket.on('diffuser_message', function(msg){
-        let unMessage = msg;
-        let leChat = document.getElementById('message');
-        leChat.innerHTML +=msg;
-
-    })
+        afficher_mon_message(msg, '#0F1');
+    });
+    socket.on('valide_message', function(msg){
+        afficher_mon_message(msg, '#234');
+    });
  }
 
 function transmettre(){
@@ -73,5 +73,11 @@ function enregistrement(){
     }
     let elmListUser = document.getElementById('list_user');
     elmListUser.innerHTML = sChaine;
+ }
+
+ function afficher_mon_message(msg, couleur){
+    let unMessage = msg;
+    let leChat = document.getElementById('message');
+    leChat.innerHTML +=msg;
  }
 </script>

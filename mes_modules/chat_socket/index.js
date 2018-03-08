@@ -20,6 +20,10 @@ module.exports.listen = function(server){
         socket.broadcast.emit('diffuser_message', data.message);
         socket.emit('valide_message', data.message);
       })
+      socket.on('disconnect', function(){
+        delete objUtilisateur[socket.id];
+        io.sockets.emit('diffuser_list_user', objUtilisateur);
+      });
    });
  return io;
 }

@@ -25,6 +25,7 @@ module.exports.listen = function (server) {
       socket.broadcast.emit('diffuser_message', infoMessage);
       socket.emit('valide_message', infoMessage);
     })
+    // Traitement de la déconnexion
     socket.on('disconnect', function () {
       socket.broadcast.emit('deconnexion', objUtilisateur[socket.id]);
       delete objUtilisateur[socket.id];

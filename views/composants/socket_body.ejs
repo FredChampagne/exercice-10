@@ -13,9 +13,7 @@
                     <th>Nom</th>
                 </tr>
             </thead>
-            <tbody>
-
-            </tbody>
+            <tbody> <!-- Affiche les utilisateurs --> </tbody>
         </table>
         <table id="message">
             <thead>
@@ -24,9 +22,7 @@
                     <th>Message</th>
                 </tr>
             </thead>
-            <tbody>
-
-            </tbody>
+            <tbody> <!-- Affiche les messages --> </tbody>
         </table>
         <div id="message_a_transmettre">
             <input type="text" name="txtMessage">
@@ -46,11 +42,11 @@
     window.onload = () => {
         socket = io();
         console.log(socket.id);
-
+        // Connexion
         socket.on('connect', function () {
             console.log('Le socket id = ' + socket.id);
-            /* l'événement ackUser a été transmis par le serveur */
         });
+        // Valide l'utilisateur pour accéder au chat
         socket.on('valide_user', function (data) {
             console.log('data en provenance du serveur = ' + data.user)
             let elmEnregistrement = document.getElementById('enregistrement');
@@ -58,15 +54,19 @@
             let elmChat = document.getElementById('chat');
             elmChat.style.display = 'flex';
         })
+        // Permet la diffusion des utilisateurs connectés
         socket.on('diffuser_list_user', function (data) {
             afficher_table_users(data);
         });
+        // Permet de diffuser le message aux utilisateurs
         socket.on('diffuser_message', function (data) {
             afficher_mon_message(data.user, data.message, 'rgb(236, 236, 236)');
         });
+        // Permet de valider le message (l'utilisateur en cours qui l'envoie)
         socket.on('valide_message', function (data) {
             afficher_mon_message(data.user, data.message, 'rgb(167, 211, 255)');
         });
+        // Affiche la déconnexion d'un utilisateur
         socket.on('deconnexion', function (data) {
             deconnexion(data);
         });
